@@ -22,6 +22,7 @@ int main() {
     std::cout << "\nWelcome to SudokuSolver!!" << std::endl;
     std::cout << "Enter number of squares to prepopulate: ";
     std::cin >> n;
+    std::cout << std::endl;
 
     // Seed the random number generator.
     unsigned seed = time(0);
