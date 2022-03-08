@@ -6,23 +6,6 @@
 
 #include "vec2.h"
 
-/*
-Summary: A function to set the invalid positions back to 0 and set the position
-            recursively to the last avaliable position
-Begin:
-    if the position is at 0,0 and there is nothing left to change:
-        print unsolvable
-    if the puzzle position is changeable:
-        set to 0
-    if x is 0:
-        move the y back one and set x = 8
-    else:
-        move x back one
-    while pos is not changeable:
-        recurse move_back
-    return new pos
-End
-*/
 vec2i Sudoku::move_back(vec2i pos) {
     // if the position is at 0,0 and there is nothing left to change:
     if (pos.x == 0 && pos.y == 0 &&
@@ -33,47 +16,24 @@ vec2i Sudoku::move_back(vec2i pos) {
     }
     // if the puzzle position is changeable:
     if (puzzle_og[pos.y][pos.x] == false) {
-        puzzle[pos.y][pos.x] = 0;  // set to 0
+        puzzle[pos.y][pos.x] = 0; // set to 0
     }
     // if x is 0:
     if (pos.x == 0) {
         // move the y back one and set x = 8
         pos.y -= 1;
         pos.x = 8;
-    } else {         // else:
-        pos.x -= 1;  // move x back one
+    } else {        // else:
+        pos.x -= 1; // move x back one
     }
     // while pos is not changeable:
     while (puzzle_og[pos.y][pos.x] == true) {
         // recurse move_back
         pos = Sudoku::move_back({pos});
     }
-    return pos;  // return new pos
+    return pos; // return new pos
 }
 
-/*
-Summary: A function that implements the backtracing algorithm to solve a
-            pre-generated sudoku puzzle
-Begin:
-    initialize variables
-    loop through y values:
-        set pos.x = 0
-        loop through x values:
-            if pos is changeable:
-                set the number to test to 1 if it is 0 otherwise itself
-                while test_num < 10:
-                    if pos and num is valid:
-                        set that pos to that num
-                    else:
-                        increment the test num to check another position
-                if no test nums worked in that position:
-                    move_back and get new pos
-                else if the test num did work:
-                    increment the position
-            else catch case that test_num worked:
-                increment pos.x
-End
-*/
 void Sudoku::solve() {
     // initialize variables
     int test_num = 1;
@@ -120,16 +80,6 @@ void Sudoku::solve() {
     }
 }
 
-/*
-Summary: A function to get a block
-Begin:
-    initialize variables
-    loop through y values:
-        loop through x values:
-        push values to vec
-    return vec
-End
-*/
 std::vector<int> Sudoku::get_block(vec2i pos) {
     // initialize variables
     std::vector<int> vec;
@@ -149,13 +99,6 @@ std::vector<int> Sudoku::get_block(vec2i pos) {
     return vec;
 }
 
-/*
-Summary: A function to get a column
-Begin:
-    initialize vec and push values to it
-    return vec
-End
-*/
 std::vector<int> Sudoku::get_column(vec2i pos) {
     // initialize vec and push values to it
     std::vector<int> vec(puzzle[pos.y], puzzle[pos.y] + 9);
@@ -163,13 +106,6 @@ std::vector<int> Sudoku::get_column(vec2i pos) {
     return vec;
 }
 
-/*
-Summary: A function to get a row
-Begin:
-    initialize vec and push values to it
-    return vec
-End
-*/
 std::vector<int> Sudoku::get_row(vec2i pos) {
     // initialize vec and push values to it
     std::vector<int> vec;
@@ -180,12 +116,6 @@ std::vector<int> Sudoku::get_row(vec2i pos) {
     return vec;
 }
 
-/*
-Summary: A function to see if there are no conflicts in rows, columns or blocks
-Begin:
-    loop through all vectors and if there is a single value match return false
-End
-*/
 bool Sudoku::pos_is_valid(vec2i pos, int val) {
     // loop through all vectors and if there is a single value match return
     // false
@@ -207,19 +137,6 @@ bool Sudoku::pos_is_valid(vec2i pos, int val) {
     return true;
 }
 
-/*
-Summary: An initializer function to generate a puzzle given a number of
-            positions to prefill
-Begin:
-    initialize variables
-    loop n number of times
-    get random position and number
-    if position is not valid:
-        get another random position and number
-        if we sit in this loop too long exit with error
-    else set pos and mark as unchangable
-End
-*/
 Sudoku::Sudoku(int n) {
     // initialize variables
     vec2i rand_pos;
@@ -254,10 +171,7 @@ Sudoku::Sudoku(int n) {
     }
 }
 
-/*
-Summary: An overloaded function to print a formatted sodoku puzzle
-*/
-std::ostream& operator<<(std::ostream& os, const Sudoku& m) {
+std::ostream &operator<<(std::ostream &os, const Sudoku &m) {
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {
             if (m.puzzle[i][j] != 0) {

@@ -16,7 +16,7 @@ Begin:
    Solve and print the solved puzzle
 End
 */
-int main() {
+int main(int num_args, char **args) {
     // Print the prompt
     int n;
     std::cout << "\nWelcome to SudokuSolver!!" << std::endl;
@@ -37,4 +37,5 @@ int main() {
     s.solve();
     std::cout << "\nSolved!" << std::endl;
     std::cout << s << std::endl;
+    return 0;
 }
